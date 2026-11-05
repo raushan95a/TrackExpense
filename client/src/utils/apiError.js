@@ -19,3 +19,12 @@ export const handleFormError = (error, setError) => {
   fieldErrors.forEach(({ field, msg }) => setError(field, { type: 'server', message: msg }));
   toast.error(getErrorMessage(error));
 };
+
+/** Wraps a react-hook-form submit handler so API errors land on the form. */
+export const withFormErrors = (onSubmit, setError) => async (values) => {
+  try {
+    await onSubmit(values);
+  } catch (error) {
+    handleFormError(error, setError);
+  }
+};

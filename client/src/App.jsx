@@ -12,6 +12,9 @@ const RegisterPage = lazy(() => import('./pages/RegisterPage.jsx'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage.jsx'));
 const TransactionsPage = lazy(() => import('./pages/TransactionsPage.jsx'));
 const TransactionFormPage = lazy(() => import('./pages/TransactionFormPage.jsx'));
+const BudgetsPage = lazy(() => import('./pages/BudgetsPage.jsx'));
+const CategoriesPage = lazy(() => import('./pages/CategoriesPage.jsx'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage.jsx'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'));
 
 export default function App() {
@@ -29,6 +32,9 @@ export default function App() {
             <Route path={ROUTES.TRANSACTIONS} element={<TransactionsPage />} />
             <Route path={ROUTES.NEW_TRANSACTION} element={<TransactionFormPage />} />
             <Route path={ROUTES.EDIT_TRANSACTION} element={<TransactionFormPage />} />
+            <Route path={ROUTES.BUDGETS} element={<BudgetsPage />} />
+            <Route path={ROUTES.CATEGORIES} element={<CategoriesPage />} />
+            <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
           </Route>
         </Route>
 

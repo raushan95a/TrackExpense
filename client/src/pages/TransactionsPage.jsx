@@ -15,6 +15,7 @@ import { ROUTES } from '../constants/routes.js';
 import { PAGE_SIZE } from '../constants/transactions.js';
 import { useAuth } from '../hooks/useAuth.js';
 import { useCategories } from '../hooks/useCategories.js';
+import { useConfirmAction } from '../hooks/useConfirmAction.js';
 import { useFetch } from '../hooks/useFetch.js';
 import { useTransactionFilters } from '../hooks/useTransactionFilters.js';
 import { getErrorMessage } from '../utils/apiError.js';
@@ -38,8 +39,6 @@ export default function TransactionsPage() {
     JSON.stringify(params),
   );
 
-  const [pendingDelete, setPendingDelete] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
 
   const transactions = data?.transactions ?? [];
@@ -52,21 +51,11 @@ export default function TransactionsPage() {
     }
   }, [pagination, page, setPage]);
 
-  const confirmDelete = async () => {
-    setIsDeleting(true);
-    try {
-      await transactionsApi.remove(pendingDelete._id);
-      toast.success('Transaction deleted');
-      setPendingDelete(null);
-      // Removing the last row of a page moves back one page; otherwise refresh in place.
-      if (transactions.length === 1 && page > 1) setPage(page - 1);
-      else reload();
-    } catch (deleteError) {
-      toast.error(getErrorMessage(deleteError));
-    } finally {
-      setIsDeleting(false);
-    }
-  };
+  const deletion = useConfirmAction((transaction) => transactionsApi.remove(transaction._id), {
+    successMessage: 'Transaction deleted',
+    // Removing the last row of a page moves back one page; otherwise refresh in place.
+    onSuccess: () => (transactions.length === 1 && page > 1 ? setPage(page - 1) : reload()),
+  });
 
   const handleExport = async () => {
     setIsExporting(true);
@@ -107,7 +96,7 @@ export default function TransactionsPage() {
         <TransactionTable
           transactions={transactions}
           currency={user.currency}
-          onDelete={setPendingDelete}
+          onDelete={deletion.request}
         />
         <Pagination {...pagination} onPageChange={setPage} />
       </div>
@@ -145,13 +134,13 @@ export default function TransactionsPage() {
       {renderContent()}
 
       <ConfirmModal
-        isOpen={Boolean(pendingDelete)}
+        isOpen={deletion.isOpen}
         title="Delete transaction?"
         message="This transaction will be permanently removed. This cannot be undone."
         confirmLabel="Delete"
-        isLoading={isDeleting}
-        onConfirm={confirmDelete}
-        onCancel={() => setPendingDelete(null)}
+        isLoading={deletion.isPending}
+        onConfirm={deletion.confirm}
+        onCancel={deletion.cancel}
       />
     </>
   );

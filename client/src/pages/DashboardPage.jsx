@@ -9,7 +9,7 @@ import EmptyState from '../components/common/EmptyState.jsx';
 import Icon from '../components/common/Icon.jsx';
 import LinkButton from '../components/common/LinkButton.jsx';
 import PageHeader from '../components/common/PageHeader.jsx';
-import MonthPicker from '../components/dashboard/MonthPicker.jsx';
+import MonthPicker from '../components/common/MonthPicker.jsx';
 import RecentTransactions from '../components/dashboard/RecentTransactions.jsx';
 import SummaryCards from '../components/dashboard/SummaryCards.jsx';
 import { RECENT_TRANSACTIONS_LIMIT } from '../constants/charts.js';

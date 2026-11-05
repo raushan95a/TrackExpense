@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { NOTE_MAX_LENGTH } from '../../constants/transactions.js';
-import { handleFormError } from '../../utils/apiError.js';
+import { withFormErrors } from '../../utils/apiError.js';
 import { toCategoryOptions } from '../../utils/categories.js';
 import { transactionSchema } from '../../validation/transaction.schema.js';
 import Button from '../common/Button.jsx';
@@ -43,16 +43,12 @@ export default function TransactionForm({
     if (current && current.type !== nextType) setValue('category', '');
   };
 
-  const submit = async (values) => {
-    try {
-      await onSubmit(values);
-    } catch (error) {
-      handleFormError(error, setError);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit(submit)} noValidate className="space-y-5">
+    <form
+      onSubmit={handleSubmit(withFormErrors(onSubmit, setError))}
+      noValidate
+      className="space-y-5"
+    >
       <Controller
         control={control}
         name="type"

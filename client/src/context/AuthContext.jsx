@@ -29,6 +29,15 @@ export function AuthProvider({ children }) {
     [authenticate],
   );
 
+  /** Updates the cached user after a profile change. */
+  const updateUser = useCallback((user) => dispatch({ type: AUTH_ACTIONS.USER_UPDATED, user }), []);
+
+  /** Stores the new token issued after a password change. */
+  const replaceToken = useCallback((token) => {
+    tokenStorage.set(token);
+    dispatch({ type: AUTH_ACTIONS.TOKEN_REPLACED, token });
+  }, []);
+
   // Any 401 from the API ends the session; ProtectedRoute then redirects to login.
   useEffect(() => {
     setUnauthorizedHandler(logout);
@@ -51,8 +60,8 @@ export function AuthProvider({ children }) {
   }, [state.token, state.user, logout]);
 
   const value = useMemo(
-    () => ({ ...state, login, register, logout }),
-    [state, login, register, logout],
+    () => ({ ...state, login, register, logout, updateUser, replaceToken }),
+    [state, login, register, logout, updateUser, replaceToken],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -13,11 +13,16 @@ const PATHS = {
   chevronRight: 'M9 18l6-6-6-6',
   arrowDown: 'M12 5v14M5 12l7 7 7-7',
   arrowUp: 'M12 19V5M5 12l7-7 7 7',
+  target:
+    'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-4a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0-4a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z',
+  check: 'M5 12.5l4.5 4.5L19 7.5',
+  alert:
+    'M12 9v4m0 4h.01M10.3 3.9 2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z',
   scale: 'M12 3v18M5 21h14M6 7h12M6 7l-3 7a3 3 0 0 0 6 0L6 7Zm12 0-3 7a3 3 0 0 0 6 0l-3-7Z',
 };
 
 /** Small inline SVG icon set (no icon library needed). */
-export default function Icon({ name, className = 'size-5' }) {
+export default function Icon({ name, className = 'size-5', style }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -27,6 +32,7 @@ export default function Icon({ name, className = 'size-5' }) {
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
+      style={style}
       aria-hidden="true"
     >
       <path d={PATHS[name]} />

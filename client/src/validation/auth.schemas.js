@@ -1,18 +1,19 @@
 import { z } from 'zod';
-import {
-  NAME_MAX_LENGTH,
-  PASSWORD_MAX_LENGTH,
-  PASSWORD_MIN_LENGTH,
-  PASSWORD_PATTERN,
-} from '../constants/validation.js';
+import { NAME_MAX_LENGTH } from '../constants/validation.js';
+import { strongPasswordField } from './fields.js';
 
 const email = z.string().trim().min(1, 'Email is required').email('Enter a valid email');
 
-const strongPassword = z
+const name = z
   .string()
-  .min(PASSWORD_MIN_LENGTH, `At least ${PASSWORD_MIN_LENGTH} characters`)
-  .max(PASSWORD_MAX_LENGTH, `At most ${PASSWORD_MAX_LENGTH} characters`)
-  .regex(PASSWORD_PATTERN, 'Include at least one letter and one number');
+  .trim()
+  .min(1, 'Name is required')
+  .max(NAME_MAX_LENGTH, `At most ${NAME_MAX_LENGTH} characters`);
+
+const passwordsMatch = (passwordKey) => [
+  (data) => data[passwordKey] === data.confirmPassword,
+  { path: ['confirmPassword'], message: 'Passwords do not match' },
+];
 
 export const loginSchema = z.object({
   email,
@@ -21,16 +22,26 @@ export const loginSchema = z.object({
 
 export const registerSchema = z
   .object({
-    name: z
-      .string()
-      .trim()
-      .min(1, 'Name is required')
-      .max(NAME_MAX_LENGTH, `At most ${NAME_MAX_LENGTH} characters`),
+    name,
     email,
-    password: strongPassword,
+    password: strongPasswordField,
     confirmPassword: z.string().min(1, 'Please confirm your password'),
   })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Passwords do not match',
+  .refine(...passwordsMatch('password'));
+
+export const profileSchema = z.object({
+  name,
+  currency: z.string().min(1, 'Choose a currency'),
+});
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, 'Current password is required'),
+    newPassword: strongPasswordField,
+    confirmPassword: z.string().min(1, 'Please confirm your new password'),
+  })
+  .refine(...passwordsMatch('newPassword'))
+  .refine((data) => data.newPassword !== data.currentPassword, {
+    path: ['newPassword'],
+    message: 'New password must differ from the current one',
   });
