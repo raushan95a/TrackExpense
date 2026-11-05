@@ -33,6 +33,7 @@ export const MESSAGES = Object.freeze({
   CATEGORY_EXISTS: 'A category with this name and type already exists',
   CATEGORY_DEFAULT_READONLY: 'Default categories cannot be modified',
   CATEGORY_IN_USE: 'Category is used by existing transactions',
+  CATEGORY_TYPE_LOCKED: 'Category type cannot change while it has transactions or budgets',
   CATEGORY_TYPE_MISMATCH: 'Category type does not match transaction type',
 
   // Transactions
@@ -42,4 +43,17 @@ export const MESSAGES = Object.freeze({
   TRANSACTION_UPDATED: 'Transaction updated',
   TRANSACTION_DELETED: 'Transaction deleted',
   TRANSACTION_NOT_FOUND: 'Transaction not found',
+
+  // Analytics
+  SUMMARY_FETCHED: 'Summary fetched',
+  CATEGORY_BREAKDOWN_FETCHED: 'Category breakdown fetched',
+  MONTHLY_TRENDS_FETCHED: 'Monthly trends fetched',
+
+  // Budgets
+  BUDGETS_FETCHED: 'Budgets fetched',
+  BUDGET_CREATED: 'Budget created',
+  BUDGET_UPDATED: 'Budget updated',
+  BUDGET_DELETED: 'Budget deleted',
+  BUDGET_NOT_FOUND: 'Budget not found',
+  BUDGET_EXPENSE_ONLY: 'Budgets can only be set on expense categories',
 });

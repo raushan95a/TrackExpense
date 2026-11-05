@@ -1,11 +1,8 @@
 import { body, query } from 'express-validator';
 import { MESSAGES } from '../constants/messages.js';
 import { PAGINATION, SEARCH_MAX_LENGTH } from '../constants/pagination.js';
-import { NOTE_MAX_LENGTH, TRANSACTION_TYPE_VALUES } from '../constants/transaction.js';
+import { MAX_AMOUNT, NOTE_MAX_LENGTH, TRANSACTION_TYPE_VALUES } from '../constants/transaction.js';
 import { idParamRule, typeQueryRule } from './common.validator.js';
-
-/** Largest accepted amount in minor units (keeps sums well within safe integers). */
-const MAX_AMOUNT = 1_000_000_000_00;
 
 const typeRule = () =>
   body('type')

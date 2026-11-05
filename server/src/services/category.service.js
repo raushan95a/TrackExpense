@@ -1,5 +1,6 @@
 import { CASE_INSENSITIVE_COLLATION, DEFAULT_CATEGORIES } from '../constants/category.js';
 import { MESSAGES } from '../constants/messages.js';
+import { Budget } from '../models/Budget.js';
 import { Category } from '../models/Category.js';
 import { Transaction } from '../models/Transaction.js';
 import { ApiError } from '../utils/ApiError.js';
@@ -42,8 +43,10 @@ const assertNameAvailable = async (userId, { name, type }, excludeId) => {
   }
 };
 
-const isCategoryInUse = (userId, categoryId) =>
+const hasTransactions = (userId, categoryId) =>
   Transaction.exists({ user: userId, category: categoryId });
+
+const hasBudgets = (userId, categoryId) => Budget.exists({ user: userId, category: categoryId });
 
 /** Loads a category the user may modify; defaults are read-only. */
 const getEditableCategory = async (userId, categoryId) => {
@@ -65,9 +68,13 @@ export const updateCategory = async (userId, categoryId, updates) => {
   if (next.name !== category.name || next.type !== category.type) {
     await assertNameAvailable(userId, next, category._id);
   }
-  // Changing type would leave existing transactions with a mismatched category.
-  if (next.type !== category.type && (await isCategoryInUse(userId, category._id))) {
-    throw ApiError.conflict(MESSAGES.CATEGORY_IN_USE);
+  // Changing type would leave transactions/budgets attached to a mismatched category.
+  if (next.type !== category.type) {
+    const [usedByTransactions, usedByBudgets] = await Promise.all([
+      hasTransactions(userId, category._id),
+      hasBudgets(userId, category._id),
+    ]);
+    if (usedByTransactions || usedByBudgets) throw ApiError.conflict(MESSAGES.CATEGORY_TYPE_LOCKED);
   }
 
   category.set(updates);
@@ -76,8 +83,10 @@ export const updateCategory = async (userId, categoryId, updates) => {
 
 export const deleteCategory = async (userId, categoryId) => {
   const category = await getEditableCategory(userId, categoryId);
-  if (await isCategoryInUse(userId, category._id)) {
+  if (await hasTransactions(userId, category._id)) {
     throw ApiError.conflict(MESSAGES.CATEGORY_IN_USE);
   }
+  // Budgets have no meaning without their category, so remove them with it.
+  await Budget.deleteMany({ user: userId, category: category._id });
   await category.deleteOne();
 };

@@ -17,3 +17,25 @@ export const buildDateRange = (from, to) => {
 
 /** Formats a Date as YYYY-MM-DD (UTC). */
 export const toIsoDate = (date) => new Date(date).toISOString().slice(0, 10);
+
+/** Formats a Date as YYYY-MM (UTC). */
+export const toMonthKey = (date) => new Date(date).toISOString().slice(0, 7);
+
+export const currentMonth = () => toMonthKey(new Date());
+
+export const currentYear = () => new Date().getUTCFullYear();
+
+/** UTC range for a YYYY-MM month as a Mongo filter: { $gte: start, $lt: nextMonthStart }. */
+export const getMonthRange = (month) => {
+  const [year, monthNumber] = month.split('-').map(Number);
+  return {
+    $gte: new Date(Date.UTC(year, monthNumber - 1, 1)),
+    $lt: new Date(Date.UTC(year, monthNumber, 1)),
+  };
+};
+
+/** UTC range for a calendar year as a Mongo filter. */
+export const getYearRange = (year) => ({
+  $gte: new Date(Date.UTC(year, 0, 1)),
+  $lt: new Date(Date.UTC(year + 1, 0, 1)),
+});
