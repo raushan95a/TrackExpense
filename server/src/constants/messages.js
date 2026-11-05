@@ -9,4 +9,18 @@ export const MESSAGES = Object.freeze({
   PAYLOAD_TOO_LARGE: 'Request body too large',
   CORS_BLOCKED: 'Origin not allowed by CORS',
   UNAUTHORIZED: 'Not authorised',
+  TOO_MANY_REQUESTS: 'Too many requests, please try again later',
+
+  // Auth
+  REGISTERED: 'Account created',
+  LOGGED_IN: 'Logged in',
+  PROFILE_FETCHED: 'Profile fetched',
+  PROFILE_UPDATED: 'Profile updated',
+  PASSWORD_CHANGED: 'Password changed',
+  EMAIL_IN_USE: 'Email is already registered',
+  INVALID_CREDENTIALS: 'Invalid email or password',
+  WRONG_CURRENT_PASSWORD: 'Current password is incorrect',
+  TOKEN_MISSING: 'Authentication token missing',
+  TOKEN_INVALID: 'Invalid or expired token',
+  USER_NOT_FOUND: 'User not found',
 });
