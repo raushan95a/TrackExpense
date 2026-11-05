@@ -8,6 +8,12 @@ const PATHS = {
   logout: 'M15 17l5-5-5-5M20 12H9M12 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7',
   menu: 'M4 6h16M4 12h16M4 18h16',
   close: 'M6 6l12 12M18 6 6 18',
+  plus: 'M12 5v14M5 12h14',
+  chevronLeft: 'M15 18l-6-6 6-6',
+  chevronRight: 'M9 18l6-6-6-6',
+  arrowDown: 'M12 5v14M5 12l7 7 7-7',
+  arrowUp: 'M12 19V5M5 12l7-7 7 7',
+  scale: 'M12 3v18M5 21h14M6 7h12M6 7l-3 7a3 3 0 0 0 6 0L6 7Zm12 0-3 7a3 3 0 0 0 6 0l-3-7Z',
 };
 
 /** Small inline SVG icon set (no icon library needed). */

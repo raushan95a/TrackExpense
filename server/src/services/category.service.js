@@ -8,12 +8,16 @@ import { ApiError } from '../utils/ApiError.js';
 /** Filter matching categories visible to a user: system defaults plus their own. */
 const visibleTo = (userId) => ({ user: { $in: [null, userId] } });
 
-/** Idempotently inserts system default categories (safe to run on every start). */
+/**
+ * Idempotently upserts system default categories (safe to run on every start).
+ * Icon/color are refreshed so palette changes reach existing databases;
+ * users cannot edit defaults, so nothing user-made is overwritten.
+ */
 export const seedDefaultCategories = async () => {
-  const operations = DEFAULT_CATEGORIES.map((category) => ({
+  const operations = DEFAULT_CATEGORIES.map(({ name, type, icon, color }) => ({
     updateOne: {
-      filter: { user: null, name: category.name, type: category.type },
-      update: { $setOnInsert: { ...category, user: null } },
+      filter: { user: null, name, type },
+      update: { $set: { icon, color }, $setOnInsert: { name, type, user: null } },
       upsert: true,
       collation: CASE_INSENSITIVE_COLLATION,
     },
