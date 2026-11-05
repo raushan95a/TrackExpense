@@ -10,6 +10,8 @@ import PublicOnlyRoute from './routes/PublicOnlyRoute.jsx';
 const LoginPage = lazy(() => import('./pages/LoginPage.jsx'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage.jsx'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage.jsx'));
+const TransactionsPage = lazy(() => import('./pages/TransactionsPage.jsx'));
+const TransactionFormPage = lazy(() => import('./pages/TransactionFormPage.jsx'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage.jsx'));
 
 export default function App() {
@@ -24,6 +26,9 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path={ROUTES.HOME} element={<DashboardPage />} />
+            <Route path={ROUTES.TRANSACTIONS} element={<TransactionsPage />} />
+            <Route path={ROUTES.NEW_TRANSACTION} element={<TransactionFormPage />} />
+            <Route path={ROUTES.EDIT_TRANSACTION} element={<TransactionFormPage />} />
           </Route>
         </Route>
 
