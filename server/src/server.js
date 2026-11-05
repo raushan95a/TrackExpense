@@ -1,11 +1,13 @@
 import app from './app.js';
 import { connectDB, disconnectDB } from './config/db.js';
 import { env } from './config/env.js';
+import { seedDefaultCategories } from './services/category.service.js';
 
 const SHUTDOWN_SIGNALS = ['SIGINT', 'SIGTERM'];
 
 const start = async () => {
   await connectDB();
+  await seedDefaultCategories();
 
   const server = app.listen(env.port, () => {
     console.log(`Server running in ${env.nodeEnv} mode on port ${env.port}`);

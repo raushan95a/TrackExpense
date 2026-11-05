@@ -23,4 +23,14 @@ export const MESSAGES = Object.freeze({
   TOKEN_MISSING: 'Authentication token missing',
   TOKEN_INVALID: 'Invalid or expired token',
   USER_NOT_FOUND: 'User not found',
+
+  // Categories
+  CATEGORIES_FETCHED: 'Categories fetched',
+  CATEGORY_CREATED: 'Category created',
+  CATEGORY_UPDATED: 'Category updated',
+  CATEGORY_DELETED: 'Category deleted',
+  CATEGORY_NOT_FOUND: 'Category not found',
+  CATEGORY_EXISTS: 'A category with this name and type already exists',
+  CATEGORY_DEFAULT_READONLY: 'Default categories cannot be modified',
+  CATEGORY_IN_USE: 'Category is used by existing transactions',
 });
