@@ -4,7 +4,7 @@ import { ApiError } from '../utils/ApiError.js';
 
 /**
  * Runs express-validator chains, rejects with { field, msg } errors,
- * and replaces req.body with only the validated (and sanitised) fields.
+ * and replaces req.body / req.query with only the validated (and sanitised) fields.
  */
 export const validate = (chains) => [
   ...chains,
@@ -17,6 +17,7 @@ export const validate = (chains) => [
       return next(ApiError.badRequest(MESSAGES.VALIDATION_FAILED, errors));
     }
     req.body = matchedData(req, { locations: ['body'] });
+    req.query = matchedData(req, { locations: ['query'] });
     return next();
   },
 ];

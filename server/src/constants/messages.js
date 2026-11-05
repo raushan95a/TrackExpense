@@ -33,4 +33,13 @@ export const MESSAGES = Object.freeze({
   CATEGORY_EXISTS: 'A category with this name and type already exists',
   CATEGORY_DEFAULT_READONLY: 'Default categories cannot be modified',
   CATEGORY_IN_USE: 'Category is used by existing transactions',
+  CATEGORY_TYPE_MISMATCH: 'Category type does not match transaction type',
+
+  // Transactions
+  TRANSACTIONS_FETCHED: 'Transactions fetched',
+  TRANSACTION_FETCHED: 'Transaction fetched',
+  TRANSACTION_CREATED: 'Transaction created',
+  TRANSACTION_UPDATED: 'Transaction updated',
+  TRANSACTION_DELETED: 'Transaction deleted',
+  TRANSACTION_NOT_FOUND: 'Transaction not found',
 });
