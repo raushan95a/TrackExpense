@@ -182,7 +182,7 @@ Status codes: `200`, `201`, `400` validation, `401` auth, `403` forbidden, `404`
 
 ```bash
 cd server && npm test     # 85 API tests: auth, user isolation, CRUD, filters, CSV, analytics, budgets
-cd client && npm test     # 41 tests: money/date utils, schemas, ProtectedRoute, LoginPage, SummaryCards
+cd client && npm test     # 48 tests: money/date/API-URL utils, schemas, ProtectedRoute, Login/Register pages, SummaryCards
 ```
 
 CI runs lint, tests and the client build on every push and pull request.
