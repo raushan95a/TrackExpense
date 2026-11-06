@@ -73,7 +73,7 @@ central error handler as middleware.
 
 ## Getting started
 
-**Prerequisites:** Node.js 18+, npm, and MongoDB (local or a free [Atlas](https://www.mongodb.com/atlas) cluster).
+**Prerequisites:** Node.js 22.22+ or 24.15+, npm, and MongoDB (local or a free [Atlas](https://www.mongodb.com/atlas) cluster).
 
 ```bash
 git clone https://github.com/raushan95a/TrackExpense.git
