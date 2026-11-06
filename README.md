@@ -1,5 +1,10 @@
 # Expense Tracker
 
+[![CI](https://github.com/raushan95a/TrackExpense/actions/workflows/ci.yml/badge.svg)](https://github.com/raushan95a/TrackExpense/actions/workflows/ci.yml)
+[![Live demo](https://img.shields.io/badge/demo-live-brightgreen)](https://client-sand-seven-47.vercel.app)
+
+**Live demo:** https://client-sand-seven-47.vercel.app
+
 A full-stack **MERN** app (MongoDB, Express, React, Node.js) for tracking income and expenses,
 organising them by category, setting monthly budgets and understanding spending through
 summaries and charts. Every user's data is private behind JWT authentication.
@@ -194,7 +199,11 @@ Step-by-step guide: **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**.
 
 ## Live demo
 
-_Add your deployed URL here._
+- **App:** https://client-sand-seven-47.vercel.app
+- **API health:** https://expense-tracker-api-sxon.onrender.com/api/v1/health
+
+The API runs on Render's free tier and sleeps when idle, so the first request after a while
+can take 30–60 seconds.
 
 ## Author
 
