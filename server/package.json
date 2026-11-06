@@ -9,7 +9,8 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write . --ignore-path ../.prettierignore"
+    "format": "prettier --write . --ignore-path ../.prettierignore",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --coverage"
   },
   "keywords": [],
   "author": "",
@@ -48,6 +49,10 @@
       "<rootDir>/tests/setupEnv.js"
     ],
     "transform": {},
-    "testTimeout": 60000
+    "testTimeout": 60000,
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/"
+    ]
   }
 }
