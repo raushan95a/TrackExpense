@@ -20,4 +20,7 @@ export const env = Object.freeze({
     .map((url) => url.trim())
     .filter(Boolean),
   nodeEnv: process.env.NODE_ENV || 'development',
+  // Number of reverse proxies in front of the app (e.g. 1 on Render/Railway) so
+  // rate limiting sees the real client IP. 0 = trust none (local development).
+  trustProxy: Number(process.env.TRUST_PROXY) || 0,
 });
